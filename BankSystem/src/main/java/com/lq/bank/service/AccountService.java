@@ -5,11 +5,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Service;
+
 import com.lq.bank.enums.AccountType;
 import com.lq.bank.model.Account;
 import com.lq.bank.model.Branch;
 import com.lq.bank.model.Customer;
 
+@Service
 public class AccountService {
 
 	public Map<String, Object> buildAccountInfo(Account account ){

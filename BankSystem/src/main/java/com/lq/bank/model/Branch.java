@@ -1,14 +1,29 @@
 package com.lq.bank.model;
 
-public class Branch {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table
+public class Branch {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int branchId;
 	
+	@Column
 	private String branchName;
 	
 	
-	
-	
+	public Branch(String branchName) {
+		super();
+		this.branchName = branchName;
+	}
+
 	public Branch(int branchId, String branchName) {
 		super();
 		this.branchId = branchId;
