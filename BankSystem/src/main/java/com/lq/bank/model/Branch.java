@@ -19,6 +19,11 @@ public class Branch {
 	private String branchName;
 	
 	
+
+	public Branch() {
+		super();
+	}
+
 	public Branch(String branchName) {
 		super();
 		this.branchName = branchName;

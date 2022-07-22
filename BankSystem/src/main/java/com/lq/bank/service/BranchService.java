@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,30 +27,82 @@ public class BranchService {
 		
 	}
 	
-	public List<Map<String, Object>> getAllbranches(){
+	public List<Map> getSingleBranchInfo(int branchId){
 		
-		List<Map<String,Object>> branchList = new ArrayList<>();
+		Optional<Branch> temp = branchRepository.findById(branchId);
 		
-		Map<String, Object> branchInfo = new HashMap<>();
-	
-		Branch branchA = new Branch(1, "Branch A");
+		List<Map> branchList = new ArrayList<Map>();
 		
-		branchInfo.put("name", branchA.getBranchName());
-		branchInfo.put("BranchId", branchA.getBranchId());
-		
-		branchList.add(branchInfo);
-		
-		Map<String, Object> branchInfo_2 = new HashMap<>();
-		
-		Branch branchB = new Branch(2, "Branch B");
-		
-		branchInfo_2.put("name", branchB.getBranchName());
-		branchInfo_2.put("branchId", branchB.getBranchId());
-		
-		branchList.add(branchInfo_2);
+		if(!temp.isEmpty()) {
+			
+			branchList.add(buildBranchInfo(temp.get()));
+			
+			
+		}
 		
 		return branchList;
 		
 	}
+	
+	public void deleteBranch(int branchId) {
+		
+		Optional<Branch> temp = branchRepository.findById(branchId);
+		if(!temp.isEmpty()) {
+			branchRepository.delete(temp.get());
+			
+		}
+	}
+	
+	public Map buildBranchInfo(Branch branch) {
+		
+		Map<String, Object>branchInfo = new HashMap<>();
+		
+		branchInfo.put("name", branch.getBranchName());
+		branchInfo.put("branchId", branch.getBranchId());
+		
+		return branchInfo;
+	}
+	
+	
+	public List<Map> getAllbranches(){
+		
+		List<Map> branchList = new ArrayList<Map>();
+		
+		Iterable<Branch> allBranches = branchRepository.findAll();
+		
+		for(Branch t : allBranches) {
+			
+			branchList.add(buildBranchInfo(t));
+		}
+		
+		return branchList;
+		
+	}
+//	public List<Map<String, Object>> getAllbranches(){
+	
+		
+//		List<Map<String,Object>> branchList = new ArrayList<>();	
+		
+//		Map<String, Object> branchInfo = new HashMap<>();
+//	
+//		Branch branchA = new Branch(1, "Branch A");
+//		
+//		branchInfo.put("name", branchA.getBranchName());
+//		branchInfo.put("BranchId", branchA.getBranchId());
+//		
+//		branchList.add(branchInfo);
+//		
+//		Map<String, Object> branchInfo_2 = new HashMap<>();
+//		
+//		Branch branchB = new Branch(2, "Branch B");
+//		
+//		branchInfo_2.put("name", branchB.getBranchName());
+//		branchInfo_2.put("branchId", branchB.getBranchId());
+//		
+//		branchList.add(branchInfo_2);
+		
+//		return branchList;
+		
+//	}
 	
 }
